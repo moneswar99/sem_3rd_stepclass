@@ -2,11 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
+
 public class PaymentSystem {
-    private interface PaymentMethod {
-        String name();
-        double finalAmount(double amount);
-    }
+    private interface PaymentMethod { String name(); double finalAmount(double amount); }
     private static final class Card implements PaymentMethod {
         public String name() { return "CARD"; }
         public double finalAmount(double amount) { return amount * 1.02; }
@@ -27,10 +25,10 @@ public class PaymentSystem {
     }
     private static PaymentMethod methodFor(String type) {
         switch (type.toUpperCase(Locale.ROOT)) {
-          case "CARD": return new Card();
-          case "WALLET": return new Wallet();
-          case "BANKTRANSFER": return new BankTransfer();
-          default: throw new IllegalArgumentException("Unknown payment type: " + type);
+            case "CARD": return new Card();
+            case "WALLET": return new Wallet();
+            case "BANKTRANSFER": return new BankTransfer();
+            default: throw new IllegalArgumentException("Unknown payment type: " + type);
         }
     }
     public static void main(String[] args) {
@@ -38,7 +36,7 @@ public class PaymentSystem {
         int n = Integer.parseInt(scanner.nextLine().trim());
         List<Transaction> transactions = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            String[] parts = scanner.nextLine().trim().split("\s+");
+            String[] parts = scanner.nextLine().trim().split(" +");
             transactions.add(new Transaction(methodFor(parts[0]), Double.parseDouble(parts[1])));
         }
         double total = 0;
